@@ -23,6 +23,7 @@ public class UserAdmin {
             }
 
             System.out.println("+++++++++++++++++++++++++++");
+            System.out.println("USER");
             System.out.println("Choose one of the following options: ");
             System.out.println("* add: ");
             System.out.println("* edit: ");

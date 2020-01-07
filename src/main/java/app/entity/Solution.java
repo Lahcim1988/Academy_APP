@@ -13,6 +13,9 @@ public class Solution {
 
     // CONSTRUCTOR
 
+    public Solution(Object o, Object o1, int exerID, int userID) {
+    }
+
     public Solution() {
     }
 
