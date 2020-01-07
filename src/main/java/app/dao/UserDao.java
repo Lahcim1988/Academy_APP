@@ -21,6 +21,8 @@ public class UserDao {
             "DELETE FROM users WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY =
             "SELECT * FROM users";
+    private static final String FIND_ALL_BY_GROUP_ID =
+            "SELECT * FROM users WHERE group_id = ?";
 
 
     // CREATE / UPDATE
@@ -94,6 +96,25 @@ public class UserDao {
         }
         return users;
     }
+
+    // 5.3
+    // find all users from specific group
+    public ArrayList<User> findAllByGroupId(int group_id) throws SQLException {
+
+        Connection conn = ConnectionFactory.getConnection();
+        ArrayList<User> users = new ArrayList<>();
+
+        PreparedStatement stmt = conn.prepareStatement(FIND_ALL_BY_GROUP_ID);
+        stmt.setInt(1, group_id);
+        ResultSet resultSet = stmt.executeQuery();
+        while (resultSet.next()) {
+            User user = setUser(resultSet);
+            users.add(user);
+        }
+        return users;
+    }
+
+    // private used by getAllUsers, getUserById
 
     private User setUser(ResultSet resultSet) throws SQLException {
         User u = new User();

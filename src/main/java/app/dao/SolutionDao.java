@@ -15,12 +15,15 @@ public class SolutionDao {
     private static final String READ_SOLUTION_QUERY =
             "SELECT * FROM solution where id = ?";
     private static final String UPDATE_SOLUTION_QUERY =
-            "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, users_id = ? where id = ?";
+            "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, users_id = ? WHERE id = ?";
     private static final String DELETE_SOLUTION_QUERY =
             "DELETE FROM solution WHERE id = ?";
     private static final String FIND_ALL_SOLUTION_QUERY =
             "SELECT * FROM solution";
-
+    private static final String FIND_ALL_BY_USER_ID =
+            "SELECT * FROM solution WHERE user_id = ?";
+    private static final String FIND_ALL_BY_EXERCISE_ID =
+            "SELECT * FROM solution WHERE exercise_id = ? ORDER BY created DESC";
 
     // CREATE / UPDATE
 
@@ -94,6 +97,42 @@ public class SolutionDao {
         }
         return solutions;
     }
+
+    // 5.1
+    // FIND ALL SOLUTION BY USER
+
+    public ArrayList<Solution> findAllByUserId(int userID) throws SQLException{
+
+        Connection conn = ConnectionFactory.getConnection();
+        ArrayList<Solution> solutions = new ArrayList<>();
+
+        PreparedStatement stmt = conn.prepareStatement(FIND_ALL_BY_USER_ID);
+        stmt.setInt(1, userID);
+        ResultSet resultSet = stmt.executeQuery();
+        while (resultSet.next()) {
+            Solution s = setSolution(resultSet);
+            solutions.add(s);
+        }
+        return solutions;
+    }
+
+    // 5.2
+    public ArrayList<Solution> findAllByExerciseId(int exerciseID) throws SQLException{
+
+        Connection conn = ConnectionFactory.getConnection();
+        ArrayList<Solution> solutions = new ArrayList<>();
+
+        PreparedStatement stmt = conn.prepareStatement(FIND_ALL_BY_EXERCISE_ID);
+        stmt.setInt(1, exerciseID);
+        ResultSet resultSet = stmt.executeQuery();
+        while (resultSet.next()) {
+            Solution s = setSolution(resultSet);
+            solutions.add(s);
+        }
+        return solutions;
+    }
+
+    // used in getAllSolution and getSolutionById
 
     private Solution setSolution(ResultSet resultSet) throws SQLException {
         Solution s = new Solution();
