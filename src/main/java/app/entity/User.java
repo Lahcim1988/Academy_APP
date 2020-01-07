@@ -23,6 +23,13 @@ public class User {
         setPassword(password);
     }
 
+    public User(String username, String email, String password, int group_id) {
+        this.username = username;
+        this.email = email;
+        setPassword(password);
+        this.group_id = group_id;
+    }
+
     // GET / SET
 
     public int getId() {

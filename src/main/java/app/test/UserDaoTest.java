@@ -19,10 +19,9 @@ public class UserDaoTest {
     @Before
     public void setUp() {
 
-        user = new User("Tom", "tom@tom.com", "passwordBob");
+        user = new User("Tom2", "tom2@tom.com", "password2Bob", 1);
         userDao = new UserDao();
     }
-
 
     @Test
     public void saveToDBTest() throws SQLException {
@@ -70,9 +69,19 @@ public class UserDaoTest {
     }
 
     @Test
-    public void getAllUsers() throws SQLException {
+    public void getAllUsersTest() throws SQLException {
 
         ArrayList<User> users = userDao.getAllUsers();
+
+        for (User value : users) {
+            System.out.println(value);
+        }
+    }
+
+    @Test
+    public void findAllByGroupIdTest() throws SQLException{
+
+        ArrayList<User> users = userDao.findAllByGroupId(1);
 
         for (User value : users) {
             System.out.println(value);
