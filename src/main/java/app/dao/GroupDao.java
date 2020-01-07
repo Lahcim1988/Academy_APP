@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GroupDao {
 
     private static final String CREATE_GROUP_QUERY =
-            "INSERT INTO user_group(group_id, name) VALUES (?, ?)";
+            "INSERT INTO user_group(name) VALUES (?)";
     private static final String READ_GROUP_QUERY =
             "SELECT * FROM user_group where group_id = ?";
     private static final String UPDATE_GROUP_QUERY =

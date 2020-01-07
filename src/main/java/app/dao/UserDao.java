@@ -1,7 +1,7 @@
 package main.java.app.dao;
 
 import main.java.app.conn.ConnectionFactory;
-import main.java.app.model.User;
+import main.java.app.entity.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class UserDao {
             stmt.executeUpdate();
             ResultSet resultSet = stmt.getGeneratedKeys();
             if (resultSet.next()) {
-                user.setId(resultSet.getLong(1));
+                user.setId(resultSet.getInt(1));
             }
         } else {
             PreparedStatement stmt = conn.prepareStatement(UPDATE_USER_QUERY);
@@ -48,23 +48,23 @@ public class UserDao {
                 e.printStackTrace();
             }
             stmt.setString(3, user.getPassword());
-            stmt.setLong(4, user.getId());
+            stmt.setInt(4, user.getId());
             stmt.executeUpdate();
         }
     }
 
     // READ
 
-    public User getUserById(long userID) throws SQLException {
+    public User getUserById(int userID) throws SQLException {
 
         Connection conn = ConnectionFactory.getConnection();
 
         PreparedStatement stmt = conn.prepareStatement(READ_USER_QUERY);
-        stmt.setLong(1, userID);
+        stmt.setInt(1, userID);
         ResultSet resultSet = stmt.executeQuery();
         if (resultSet.next()) {
             User user = new User();
-            user.setId(resultSet.getLong("id"));
+            user.setId(resultSet.getInt("id"));
             user.setUsername(resultSet.getString("username"));
             user.setEmail(resultSet.getString("email"));
             user.setPassword(resultSet.getString("password"));
@@ -76,12 +76,12 @@ public class UserDao {
 
     // DELETE
 
-    public void delete(long userID) throws SQLException {
+    public void delete(int userID) throws SQLException {
 
         Connection conn = ConnectionFactory.getConnection();
 
         PreparedStatement stmt = conn.prepareStatement(DELETE_USER_QUERY);
-        stmt.setLong(1, userID);
+        stmt.setInt(1, userID);
         stmt.executeUpdate();
 
     }
@@ -97,7 +97,7 @@ public class UserDao {
         ResultSet resultSet = stmt.executeQuery();
         while (resultSet.next()) {
             User u = new User();
-            u.setId(resultSet.getLong("id"));
+            u.setId(resultSet.getInt("id"));
             u.setUsername(resultSet.getString("username"));
             u.setEmail(resultSet.getString("email"));
             u.setPassword(resultSet.getString("password"));

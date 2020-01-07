@@ -1,13 +1,16 @@
-package main.java.app.model;
+package main.java.app.entity;
 
 import main.java.app.jbcrypt.BCrypt;
 
 public class User {
 
-    private long id;
+    private int id;
     private String username;
     private String email;
     private String password;
+
+    // foreign key
+    private int group_id;
 
     // CONSTRUCTORS
 
@@ -22,11 +25,11 @@ public class User {
 
     // GET / SET
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,6 +58,15 @@ public class User {
     public void setPassword(String password) {
 
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    // foreign key
+    public int getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(int group_id) {
+        this.group_id = group_id;
     }
 
     // toString

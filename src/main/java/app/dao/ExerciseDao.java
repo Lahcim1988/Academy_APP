@@ -52,7 +52,7 @@ public class ExerciseDao {
 
     // READ
 
-    public Exercise getExcerciseById(int exerciseID) throws SQLException {
+    public Exercise getExerciseById(int exerciseID) throws SQLException {
 
         Connection conn = ConnectionFactory.getConnection();
 

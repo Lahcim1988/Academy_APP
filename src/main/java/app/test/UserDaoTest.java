@@ -2,7 +2,7 @@ package main.java.app.test;
 
 import main.java.app.dao.UserDao;
 import main.java.app.jbcrypt.BCrypt;
-import main.java.app.model.User;
+import main.java.app.entity.User;
 import org.junit.Before;
 import org.junit.Test;
 
