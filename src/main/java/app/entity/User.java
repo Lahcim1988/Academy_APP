@@ -83,6 +83,7 @@ public class User {
         sb.append(String.format("* ID: %d\n", this.id));
         sb.append(String.format("* username: %s\n", this.username));
         sb.append(String.format("* email: %s\n", this.email));
+        sb.append(String.format("* group: %s\n", this.group_id));
         return sb.toString();
     }
 }
