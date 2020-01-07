@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class UserDao {
 
     private static final String CREATE_USER_QUERY =
-            "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+            "INSERT INTO users(username, email, password, group_id) VALUES (?, ?, ?, ?)";
     private static final String READ_USER_QUERY =
             "SELECT * FROM users where id = ?";
     private static final String UPDATE_USER_QUERY =
-            "UPDATE users SET username = ?, email = ?, password = ? where id = ?";
+            "UPDATE users SET username = ?, email = ?, password = ?, group_id = ? where id = ?";
     private static final String DELETE_USER_QUERY =
             "DELETE FROM users WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY =
@@ -34,6 +34,7 @@ public class UserDao {
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
+            stmt.setInt(4, user.getGroup_id());
             stmt.executeUpdate();
             ResultSet resultSet = stmt.getGeneratedKeys();
             if (resultSet.next()) {
@@ -42,13 +43,10 @@ public class UserDao {
         } else {
             PreparedStatement stmt = conn.prepareStatement(UPDATE_USER_QUERY);
             stmt.setString(1, user.getUsername());
-            try {
-                stmt.setString(2, user.getEmail());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
-            stmt.setInt(4, user.getId());
+            stmt.setInt(4, user.getGroup_id());
+            stmt.setInt(5, user.getId());
             stmt.executeUpdate();
         }
     }
@@ -63,12 +61,7 @@ public class UserDao {
         stmt.setInt(1, userID);
         ResultSet resultSet = stmt.executeQuery();
         if (resultSet.next()) {
-            User user = new User();
-            user.setId(resultSet.getInt("id"));
-            user.setUsername(resultSet.getString("username"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("password"));
-            return user;
+            return setUser(resultSet);
         }
         return null;
 
@@ -96,14 +89,20 @@ public class UserDao {
         PreparedStatement stmt = conn.prepareStatement(FIND_ALL_USERS_QUERY);
         ResultSet resultSet = stmt.executeQuery();
         while (resultSet.next()) {
-            User u = new User();
-            u.setId(resultSet.getInt("id"));
-            u.setUsername(resultSet.getString("username"));
-            u.setEmail(resultSet.getString("email"));
-            u.setPassword(resultSet.getString("password"));
-            users.add(u);
+            User user = setUser(resultSet);
+            users.add(user);
         }
         return users;
+    }
+
+    private User setUser(ResultSet resultSet) throws SQLException {
+        User u = new User();
+        u.setId(resultSet.getInt("id"));
+        u.setUsername(resultSet.getString("username"));
+        u.setEmail(resultSet.getString("email"));
+        u.setPassword(resultSet.getString("password"));
+        u.setGroup_id(resultSet.getInt("group_id"));
+        return u;
     }
 
 }
