@@ -34,5 +34,5 @@ User:
 * EXERCISE
 * SOLUTION
 
-![DATA SCHEMA](Data Schema.jpg)
+![DATA SCHEMA](https://github.com/Lahcim1988/Academy_APP/blob/master/Data%20Schema.jpg)
 
